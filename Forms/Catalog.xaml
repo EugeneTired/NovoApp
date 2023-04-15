@@ -1,0 +1,527 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Novoapp.Forms"
+        xmlns:Novoapp="clr-namespace:Novoapp" 
+        x:Class="Novoapp.Forms.Catalog"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        MinWidth="500" MinHeight="300"
+        Title="Catalog" Height="550" Width="700">
+    <Window.Resources>
+        <Style x:Key="ColorButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="white"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFFB9316"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#ff3"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid >
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="GigaBar" Grid.Row="0" MouseLeftButtonDown="MainWindow_MouseDoubleClick">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0,1" StartPoint="1,5">
+                    <GradientStop Color="#FFCEDFE2" Offset="0"/>
+                    <GradientStop Color="#FFABAFFF" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Image 
+                Grid.Column="0"
+                Margin="5"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Height="65"
+                Source="/images/Logo4.png"/>
+            <TextBlock 
+                Foreground="#FF2667A8"
+                Grid.Column="1"
+                FontSize="40"
+                VerticalAlignment="Center"
+                Margin="0 0 0 0"
+                Text="Novonet"/>
+
+            <StackPanel VerticalAlignment="Center" Grid.Column="3" >
+                <TextBlock 
+                    Foreground="#FF2667A8"
+                    Margin="0 0 15 0"
+                    FontSize="28"
+                    TextWrapping="Wrap"
+                    Text="Каталог тарифов"/>
+
+            </StackPanel>
+            <StackPanel Margin="5 0 5 0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="4" Orientation="Horizontal">
+                <Button
+                    Click="SmallBut_Click"
+                    x:Name="SmallBut" 
+                    Width="30"
+                    Height="30" 
+                    FontFamily="Webdings"  
+                    BorderBrush="#FFB42D2D">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="3"/>
+                        </Style>
+                    </Button.Resources>
+                    <Button.Style>
+                        <StaticResource ResourceKey="ColorButton"/>
+                    </Button.Style>
+                    <TextBlock VerticalAlignment="Center" FontSize="24" HorizontalAlignment="Center" Text="0" FontFamily="Webdings"/>
+                </Button>
+                <Button
+                    Click="SwitchBut_Click"
+                    x:Name="SwitchBut"
+                    Width="30"
+                    Margin="7 0 7 0"
+                    BorderBrush="#FFB42D2D">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="3"/>
+                        </Style>
+                    </Button.Resources>
+                    <Button.Style>
+                        <StaticResource ResourceKey="ColorButton"/>
+                    </Button.Style>
+                    <TextBlock x:Name="QYYY" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Text="1" FontFamily="Webdings"/>
+                </Button>
+                <Button
+                    Click="CloseBut_Click" 
+                    x:Name="CloseBut"
+                    Width="30"
+                    BorderBrush="#FFB42D2D">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="3"/>
+                        </Style>
+                    </Button.Resources>
+                    <Button.Style>
+                        <StaticResource ResourceKey="ColorButton"/>
+                    </Button.Style>
+                    <TextBlock FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Text="r" FontFamily="Webdings"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Grid Margin="10" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <ListView 
+                MouseLeftButtonDown="LV_MouseLeftButtonDown"
+                SelectionChanged="LV_SelectionChanged"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                x:Name="LV">
+                <ListView.Background>
+                    <LinearGradientBrush EndPoint="1,1" StartPoint="0.5,0">
+                        <GradientStop Color="White" Offset="0"/>
+                        <GradientStop Color="#FF9BEDFF" Offset="1"/>
+                    </LinearGradientBrush>
+                </ListView.Background>
+                <ListView.Effect>
+                    <BlurEffect Radius="0" RenderingBias="Quality"/>
+                </ListView.Effect>
+                <ListView.ContextMenu>
+                    <ContextMenu Name="ContMenu">
+                        <MenuItem Header="Добавить" Click="MenuItem_Click_1">
+                            <MenuItem.Icon>
+                                <Image Source="/images/Add.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Удалить" Click="MenuItem_Click_2">
+                            <MenuItem.Icon>
+                                <Image Source="/images/Delete.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Изменить" Click="MenuItem_Click">
+                            <MenuItem.Icon>
+                                <Image Source="/images/Change.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Name="UserMenu" Header="Выход" Click="MenuItem_Click_3">
+                            <MenuItem.Icon>
+                                <Image Source="/images/User logo.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.BorderBrush>
+                    <LinearGradientBrush EndPoint="1,1" StartPoint="0.5,0">
+                        <GradientStop Color="White"/>
+                        <GradientStop Color="#FF0097FF" Offset="1"/>
+                    </LinearGradientBrush>
+                </ListView.BorderBrush>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0 10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="320"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <!--Левая часть каталога(картинка)-->
+                            <!--<Border 
+                                Height="150"
+                                BorderBrush="Black"
+                                BorderThickness="2"
+                                CornerRadius="6"
+                                Grid.Column="0">
+                                <Image  
+                                    Stretch="Fill" 
+                                    Margin="5">
+                                    <Image.Source>
+                                        <Binding Path="Image">
+                                            <Binding.TargetNullValue>
+                                                <BitmapImage UriSource="/images/picture.png"/>
+                                            </Binding.TargetNullValue>
+                                        </Binding>
+                                    </Image.Source>
+                                </Image>
+                            </Border>-->
+                            <!--Средняя часть каталога-->
+                            <Border 
+                                Width="300"
+                                Height="150"
+                                Margin="8 0"
+                                BorderBrush="Black"
+                                BorderThickness="2" 
+                                CornerRadius="6" 
+                                Grid.Column="0" 
+                                VerticalAlignment="Center">
+                                <StackPanel
+                                    >
+                                    <TextBlock
+                                        TextWrapping="Wrap"
+                                        Margin="5 5 0 5"
+                                        FontFamily="Calibri"
+                                        FontSize="22"
+                                        Text="{Binding Name}"/>
+
+                                    <TextBlock
+                                        Height="auto"
+                                        Margin="5 2 0 2"
+                                        FontFamily="Calibri"
+                                        FontSize="22"
+                                        TextWrapping="Wrap"
+                                        Text="{Binding Description}"/>
+                                    <TextBlock
+                                        TextWrapping="Wrap"
+                                        Margin="5 2 0 2"
+                                        FontFamily="Calibri"
+                                        FontSize="22"
+                                        Text="{Binding TariffType.Name, StringFormat='{}Категория: {0}'}"/>
+                                </StackPanel>
+                            </Border>
+                            <!--Правая часть каталога-->
+                            <Border 
+                                Height="125"
+                                Width="175"
+                                CornerRadius="6" 
+                                Grid.Column="3"
+                                BorderBrush="Black"
+                                BorderThickness="2">
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock
+                                        TextWrapping="Wrap"
+                                        Margin="5 5 0 5"
+                                        FontFamily="Calibri"
+                                        FontSize="22"
+                                        Text="{Binding MonthlyCost, StringFormat='{}Цена: {0:0.00 руб. в месяц}'}"/>
+                                    
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <Novoapp:Tariff Description="ОписаниеОписание" MonthlyCost="310" Name="НаименованиеНаименование" TariffId="1" IdTariffType="1"/>
+            </ListView>
+
+            <Grid Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Panel.ZIndex="15">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Name="BorderColorChange" Opacity="0.7" Grid.RowSpan="2">
+                    <Border.Effect>
+                        <BlurEffect Radius="2" RenderingBias="Quality"/>
+                    </Border.Effect>
+                    <!--<TextBox
+                            Name="BaskAmountTXT2"
+                            TextDecorations="Underline"
+                            Text="?"
+                            Margin="15,0,0,20"
+                            Width="auto"
+                            Height="35"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            FontFamily="Verdana"  
+                            FontSize="28" 
+                            Background="{x:Null}" 
+                            BorderBrush="{x:Null}" 
+                            SelectionBrush="{x:Null}" 
+                            Foreground="Black"/>-->
+                </Border>
+
+                <!--Кнопка слайдер-->
+                <Button
+                    Name="ShowMinObud"
+                    Width="40"
+                    Panel.ZIndex="20"
+                    Height="50"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    Margin="5 0 30 0"
+                    Click="ShowMinObud_Click"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    >
+                    <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+
+                        <Rectangle 
+                            HorizontalAlignment="Left"
+                            Name="RectOne"
+                            Fill="Black"
+                            Height="3"
+                            Width="40"/>
+                        <Rectangle 
+                            HorizontalAlignment="Left"
+                            Name="RectTwo"
+                            Margin="0 7"
+                            Fill="Black"
+                            Height="3"
+                            Width="40"/>
+                        <Rectangle 
+                            Name="RectThree"
+                            Fill="Black"
+                            Height="3"
+                            Width="40"/>
+
+                    </StackPanel>
+                </Button>
+
+                <!--Для раскрытия списка менять здесь ширину -->
+                <Grid Margin="25 0 0 0" Grid.Column="1" Width="15" x:Name="Obud" Grid.RowSpan="2">
+
+                    <StackPanel Name="StackPenMega" 
+                        Margin="35 30 0 0"
+                        Height="auto" 
+                        VerticalAlignment="Top"
+                        Orientation="Vertical">
+                        <Label Name="LabelCat" Content="Поиск по каталогу" Foreground="White" FontSize="18" FontFamily="Calibri"/>
+                        <TextBox 
+                            TextChanged="SearchBox_TextChanged"
+                            FontFamily="Calibri"
+                            FontSize="22"
+                            Text="Поисковик"
+                            Name="SearchBox"
+                            Margin="0 0 0 0"
+                            Height="35"
+                            Width="250"/>
+                        <Label Name="LabelFilt" Content="Фильтр по категории" Foreground="White" FontSize="18" FontFamily="Calibri"/>
+
+
+                        <ComboBox
+                            Height="35"
+                            Width="250"
+                            SelectedIndex="-1"
+                            FontFamily="Calibri"
+                            FontSize="18"
+                            Background="{x:Null}"
+                            BorderBrush="Black"
+                            x:Name="ComboFilter" 
+                            SelectionChanged="ComboFilter_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Label Name="LabelSort" Margin="10 10" Content="Сортировка по цене" Foreground="White" FontSize="18" FontFamily="Calibri"/>
+                        <ComboBox
+                            FontFamily="Verdana"
+                            FontSize="20"
+                            FontWeight="Medium"
+                            Name="PriceSort"
+                            Width="250"
+                            Margin="0"
+                            SelectedIndex="-1"
+                            SelectionChanged="ComboFilter_SelectionChanged"
+                            BorderBrush="Black">
+                            <ComboBox.Background>
+                                <LinearGradientBrush EndPoint="0,1">
+                                    <GradientStop Color="#FFF0F0F0"/>
+                                    <GradientStop Color="#3FE5E5E5" Offset="1"/>
+                                </LinearGradientBrush>
+                            </ComboBox.Background>
+                            <TextBlock Text="Возрастанию"/>
+                            <TextBlock Text="Убыванию"/>
+                        </ComboBox>
+                        <StackPanel Name="StackPanOne" Margin="0 5" Orientation="Horizontal">
+                            <TextBlock
+                                Foreground="White"
+                                Margin="10 0 15 0"
+                                Text="Без размытия"
+                                FontFamily="Calibri"
+                                FontSize="22"/>
+                            <CheckBox 
+                                Margin="55 0"
+                                Height="15"
+                                Width="15"
+                                Checked="CheckBlur_Checked"
+                                Unchecked="CheckBlur_Unchecked"
+                                Name="CheckBlur">
+                                <CheckBox.LayoutTransform>
+                                    <ScaleTransform ScaleX="2" ScaleY="2"/>
+                                </CheckBox.LayoutTransform>
+                            </CheckBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Foreground="White" Text="Показать архивные тарифы"/>
+                            <CheckBox 
+                                Width="15"
+                                Height="15"
+                                Name="CheckArchive"
+                                Checked="CheckArchive_Checked"
+                                Unchecked="CheckArchive_Unchecked">
+                                <CheckBox.LayoutTransform>
+                                    <ScaleTransform ScaleX="2" ScaleY="2"/>
+                                </CheckBox.LayoutTransform>
+                            </CheckBox>
+                        </StackPanel>
+
+
+                        <Button 
+                            FontFamily="calibri"
+                            FontSize="20"
+                            Margin="0 50 0 0"
+                            VerticalAlignment="Bottom"
+                            Click="Button_Click"
+                            Foreground="White" 
+                            Width="250" 
+                            Content="Вернуться в меню выбора" 
+                            Background="{x:Null}"
+                            BorderThickness="4 0 4 1" 
+                            BorderBrush="White">
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+
+
+                        <!--<TextBox
+                            Name="BaskAmountTXT"
+                            TextDecorations="Underline"
+                            Text="?"
+                            Margin="0,0,15,0"
+                            Width="auto"
+                            Height="35"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            FontFamily="Verdana"  
+                            FontSize="28" 
+                            Background="{x:Null}" 
+                            BorderBrush="{x:Null}" 
+                            SelectionBrush="{x:Null}" 
+                            Foreground="white"/>-->
+
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+        <!--Подтверждение закрытия-->
+        <Grid 
+            Name="ConfirmationGrid"
+            Visibility="Collapsed"
+            Background="White"
+            Grid.RowSpan="2">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock
+                    FontFamily="Calibri" 
+                    FontSize="35"
+                    Margin="0 0 0 10"
+                    Text="Вы уверены что хотите выйти?"/>
+                <Button 
+                    IsTabStop="False"
+                    Name="ConfirmClick"
+                    Click="ConfirmClick_Click"
+                    Margin="0 0 0 25"
+                    FontFamily="Calibri" 
+                    FontSize="36" 
+                    Width="250"
+                    Height="50"
+                    Content="Да" 
+                    BorderBrush="Black">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="15"/>
+                            <Setter Property="BorderBrush" Value="Black"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                        </Style>
+                    </Button.Resources>
+                    <Button.Style>
+                        <StaticResource ResourceKey="ColorButton"/>
+                    </Button.Style>
+                </Button>
+                <Button 
+                    IsTabStop="False"
+                    Name="CancelExit"
+                    Click="CancelExit_Click"
+                    FontFamily="Calibri"
+                    FontSize="36"
+                    Width="250"
+                    Height="50" 
+                    Content="Нет" 
+                    BorderBrush="Black">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="15"/>
+                            <Setter Property="BorderBrush" Value="Black"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                        </Style>
+                    </Button.Resources>
+                    <Button.Style>
+                        <StaticResource ResourceKey="ColorButton"/>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
